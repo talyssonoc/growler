@@ -1,0 +1,10 @@
+instrumentation:
+  root: 'src'
+  excludes:
+    - 'container.js'
+    - 'app/Application.js'
+    - 'interfaces/http/Server.js'
+reporting:
+  reports:
+    - html
+    - lcov
