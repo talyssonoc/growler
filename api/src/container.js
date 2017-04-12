@@ -3,15 +3,18 @@ const { scopePerRequest } = require('awilix-express');
 
 const config = require('../config');
 const Application = require('./app/Application');
+const CreateUser = require('./app/user/CreateUser');
 
 const Server = require('./interfaces/http/Server');
 const router = require('./interfaces/http/router');
 const loggerMiddleware = require('./interfaces/http/logging/loggerMiddleware');
 const errorHandler = require('./interfaces/http/errors/errorHandler');
 const devErrorHandler = require('./interfaces/http/errors/devErrorHandler');
+const UserSerializer = require('./interfaces/http/user/UserSerializer');
 
 const logger = require('./infra/logging/logger');
-const { database } = require('./infra/database/models');
+const SequelizeUsersRepository = require('./infra/user/SequelizeUsersRepository');
+const { database, User: UserModel } = require('./infra/database/models');
 
 const container = createContainer();
 
@@ -37,17 +40,24 @@ container
     errorHandler: config.production ? errorHandler : devErrorHandler
   });
 
+// Serializers
+container
+  .registerValue({ UserSerializer });
+
 // Repositories
 container.registerClass({
+  usersRepository: [SequelizeUsersRepository, { lifetime: Lifetime.SINGLETON }]
 });
 
 // Database
 container.registerValue({
-  database
+  database,
+  UserModel
 });
 
 // Operations
 container.registerClass({
+  createUser: CreateUser
 });
 
 module.exports = container;
