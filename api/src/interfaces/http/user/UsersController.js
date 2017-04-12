@@ -6,16 +6,20 @@ const UsersController = {
   get router() {
     const router = Router();
 
-    router.post('/', inject('createUser'), this.create);
+    router.post('/', inject('createUser', 'UserSerializer'), this.create);
+
+    return router;
   },
 
   create(req, res, next) {
-    const { createUser } = req.createUser;
-    const { SUCCESS, ERROR, VALIDATION_ERROR } = createUser;
+    const { createUser, UserSerializer } = req;
+    const { SUCCESS, ERROR, VALIDATION_ERROR } = createUser.outputs;
 
     createUser
       .on(SUCCESS, (user) => {
-        res.status(S.CREATED).json(user);
+        res
+          .status(S.CREATED)
+          .json(UserSerializer.serialize(user));
       })
       .on(VALIDATION_ERROR, (error) => {
         res.status(S.BAD_REQUEST).json({
