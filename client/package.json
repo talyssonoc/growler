@@ -1,0 +1,31 @@
+{
+  "name": "growler-client",
+  "private": "true",
+  "version": "1.0.0",
+  "description": "Growler client dependencies",
+  "main": "index.js",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "scripts": {
+    "start": "webpack-dev-server"
+  },
+  "repository": "https://github.com/talyssonoc/growler",
+  "author": "Talysson <talyssonoc@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-env": "^1.3.3",
+    "babel-preset-react": "^6.24.1",
+    "html-webpack-plugin": "^2.28.0",
+    "webpack": "^2.3.3",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "dependencies": {
+    "prop-types": "^15.5.7",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  }
+}
