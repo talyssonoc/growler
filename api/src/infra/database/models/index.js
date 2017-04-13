@@ -11,6 +11,7 @@ if(config) {
   });
 } else {
   /* eslint-disable no-console */
+  /* istanbul ignore next */
   console.error('Database config file log found, disabling database.');
   /* eslint-enable no-console */
 }

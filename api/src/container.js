@@ -10,6 +10,8 @@ const router = require('./interfaces/http/router');
 const loggerMiddleware = require('./interfaces/http/logging/loggerMiddleware');
 const errorHandler = require('./interfaces/http/errors/errorHandler');
 const devErrorHandler = require('./interfaces/http/errors/devErrorHandler');
+const JSONAPIDeserializer = require('./interfaces/http/JSONAPIDeserializer');
+const ErrorSerializer = require('./interfaces/http/errors/ErrorSerializer');
 const UserSerializer = require('./interfaces/http/user/UserSerializer');
 
 const logger = require('./infra/logging/logger');
@@ -40,9 +42,13 @@ container
     errorHandler: config.production ? errorHandler : devErrorHandler
   });
 
-// Serializers
+// JSON API
 container
-  .registerValue({ UserSerializer });
+  .registerValue({
+    JSONAPIDeserializer,
+    ErrorSerializer,
+    UserSerializer
+  });
 
 // Repositories
 container.registerClass({

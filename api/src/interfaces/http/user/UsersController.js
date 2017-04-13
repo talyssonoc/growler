@@ -6,13 +6,22 @@ const UsersController = {
   get router() {
     const router = Router();
 
-    router.post('/', inject('createUser', 'UserSerializer'), this.create);
+    router.post('/',
+      inject('createUser', 'UserSerializer', 'ErrorSerializer', 'JSONAPIDeserializer'),
+      this.create
+    );
 
     return router;
   },
 
   create(req, res, next) {
-    const { createUser, UserSerializer } = req;
+    const {
+      createUser,
+      UserSerializer,
+      ErrorSerializer,
+      JSONAPIDeserializer
+    } = req;
+
     const { SUCCESS, ERROR, VALIDATION_ERROR } = createUser.outputs;
 
     createUser
@@ -22,13 +31,15 @@ const UsersController = {
           .json(UserSerializer.serialize(user));
       })
       .on(VALIDATION_ERROR, (error) => {
-        res.status(S.BAD_REQUEST).json({
-          type: 'ValidationError'
-        });
+        res
+          .status(S.BAD_REQUEST)
+          .json(ErrorSerializer.badRequest(error));
       })
       .on(ERROR, next);
 
-    createUser.execute(req.body);
+    JSONAPIDeserializer
+      .deserialize(req.body)
+      .then((userData) => createUser.execute(userData));
   }
 };
 
