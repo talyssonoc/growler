@@ -8,9 +8,14 @@ describe('API :: POST /api/users', () => {
 
     beforeEach(() => {
       userData = {
-        username: 'theuser',
-        email: 'me@theuser.com',
-        password: 'safepassword'
+        data: {
+          type: 'users',
+          attributes: {
+            username: 'theuser',
+            email: 'me@theuser.com',
+            password: 'safepassword'
+          }
+        }
       };
     });
 
@@ -40,7 +45,7 @@ describe('API :: POST /api/users', () => {
     });
   });
 
-  context('when user email/username already exists', () => {
+  context('when validation fails', () => {
     beforeEach(() => {
       return factory.create('user', {
         email: 'me@theuser.com'
@@ -49,9 +54,14 @@ describe('API :: POST /api/users', () => {
 
     it('does not create and returns 400', () => {
       const userData = {
-        user: 'theuser',
-        email: 'me@theuser.com',
-        password: 'safepassword'
+        data: {
+          type: 'users',
+          attributes: {
+            username: 'theuser',
+            email: 'me@theuser.com',
+            password: 'safepassword'
+          }
+        }
       };
 
       return request()
@@ -59,7 +69,12 @@ describe('API :: POST /api/users', () => {
         .send(userData)
         .expect(400)
         .then(({ body }) => {
-          console.log(body);
+          const errors = body.errors;
+          const details = errors[0].meta.details;
+
+          expect(errors).to.be.instanceOf(Array);
+          expect(details).to.have.lengthOf(1);
+          expect(details[0].path).equal('email');
         });
     });
   });

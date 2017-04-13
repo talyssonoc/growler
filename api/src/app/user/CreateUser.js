@@ -1,4 +1,5 @@
 const Operation = require('src/app/Operation');
+const ValidationError = require('src/app/errors/ValidationError');
 const User = require('src/domain/user/User');
 
 class CreateUser extends Operation {
@@ -18,7 +19,11 @@ class CreateUser extends Operation {
         this.emit(SUCCESS, newUser);
       })
       .catch((error) => {
-        this.emit(VALIDATION_ERROR, error);
+        if(error.message === ValidationError.MESSAGE) {
+          return this.emit(VALIDATION_ERROR, error);
+        }
+
+        this.emit(ERROR, error);
       });
   }
 }
