@@ -12,11 +12,10 @@ module.exports = {
     path: resolve(__dirname, 'dist'),
     publicPath: '/'
   },
-  devtool: 'inline-source-map',
-  devServer: {
-    contentBase: resolve(__dirname, 'dist'),
-    publicPath: '/',
-    historyApiFallback: true
+  resolve: {
+    alias: {
+      app: resolve(__dirname, 'app')
+    }
   },
   module: {
     rules: [
@@ -31,4 +30,10 @@ module.exports = {
     new webpack.NamedModulesPlugin(),
     new HTMLWebpackPlugin()
   ],
+  devtool: 'inline-source-map',
+  devServer: {
+    contentBase: resolve(__dirname, 'dist'),
+    publicPath: '/',
+    historyApiFallback: true
+  },
 };
