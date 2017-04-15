@@ -1,11 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+import { Provider } from 'react-redux'
+
 import {
   BrowserRouter as Router,
   Route,
   Link
 } from 'react-router-dom'
+
+import store from 'app/store'
 
 const Dummy = () => (
   <Router>
@@ -14,6 +18,8 @@ const Dummy = () => (
 )
 
 export default ReactDOM.render(
-  <Dummy />,
+  <Provider store={store}>
+    <Dummy />
+  </Provider>,
   document.body
 )
