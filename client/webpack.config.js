@@ -14,7 +14,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      app: resolve(__dirname, 'app')
+      app: resolve(__dirname, 'app'),
+      presentation: resolve(__dirname, 'presentation')
     }
   },
   module: {
@@ -23,6 +24,14 @@ module.exports = {
         test: /\.jsx?$/,
         use: ['babel-loader'],
         exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+          'postcss-loader'
+        ]
       }
     ],
   },
