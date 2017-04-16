@@ -1,7 +1,7 @@
-const { resolve } = require('path')
-const webpack = require('webpack')
+const { resolve } = require('path');
+const webpack = require('webpack');
 
-const HTMLWebpackPlugin = require('html-webpack-plugin')
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -13,16 +13,19 @@ module.exports = {
     publicPath: '/'
   },
   resolve: {
-    alias: {
-      app: resolve(__dirname, 'app'),
-      presentation: resolve(__dirname, 'presentation')
-    }
+    modules: [
+      resolve(__dirname, 'src'),
+      'node_modules'
+    ]
   },
   module: {
     rules: [
       {
         test: /\.jsx?$/,
-        use: ['babel-loader'],
+        use: [
+          'babel-loader',
+          'eslint-loader'
+        ],
         exclude: /node_modules/
       },
       {
