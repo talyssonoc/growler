@@ -1,0 +1,26 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "plugins": [
+    "react"
+  ],
+  "ecmaFeatures": {
+    "jsx": true,
+    "modules": true
+  },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "rules": {
+    "comma-spacing": ["error", { "before": false, "after": true }],
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"]
+  }
+}
