@@ -1,26 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Provider } from 'react-redux';
-
-import store from 'app/store';
-
-import {
-  BrowserRouter as Router,
-  Route
-} from 'react-router-dom';
-
-import Dummy from 'presentation/Dummy';
-
-const App = () => (
-  <Router>
-    <Route exact path="/" component={Dummy} />
-  </Router>
-);
+import Application from 'Application';
 
 export default ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <Application />,
   document.getElementById('root')
 );
