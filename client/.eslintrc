@@ -8,15 +8,15 @@
     "react"
   ],
   "ecmaFeatures": {
-    "jsx": true,
-    "modules": true
+    "jsx": true
   },
   "env": {
     "browser": true,
     "es6": true,
-    "node": true
+    "jest": true
   },
   "rules": {
+    "no-unused-vars": 0,
     "comma-spacing": ["error", { "before": false, "after": true }],
     "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],
