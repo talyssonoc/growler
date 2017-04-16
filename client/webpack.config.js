@@ -37,7 +37,9 @@ module.exports = {
   },
   plugins: [
     new webpack.NamedModulesPlugin(),
-    new HTMLWebpackPlugin()
+    new HTMLWebpackPlugin({
+      template: resolve(__dirname, 'index.ejs')
+    })
   ],
   devtool: 'inline-source-map',
   devServer: {
