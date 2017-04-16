@@ -2,11 +2,11 @@ import React from 'react';
 
 import { BrowserRouter, Route } from 'react-router-dom';
 
-import Dummy from 'presentation/Dummy';
+import Main from 'presentation/Main';
 
 const Router = () => (
   <BrowserRouter>
-    <Route exact path="/" component={Dummy} />
+    <Route path="/" component={Main} />
   </BrowserRouter>
 );
 
