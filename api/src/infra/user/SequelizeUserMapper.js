@@ -11,8 +11,8 @@ const SequelizeUserMapper = {
     return new User(userData);
   },
 
-  toDatabase(survivor) {
-    return pick(ENTITY_ATTRS, survivor);
+  toDatabase(user) {
+    return pick(ENTITY_ATTRS, user);
   }
 };
 
