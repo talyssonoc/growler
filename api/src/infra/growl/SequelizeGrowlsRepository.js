@@ -19,14 +19,14 @@ class SequelizeGrowlsRepository {
 
     return this.UserModel
       .findById(growl.userId)
-      .then((u) => {
-        if(!u) {
+      .then((user) => {
+        if(!user) {
           const error = new NotFoundError('User', growl.userId);
 
           return Promise.reject(error);
         }
 
-        return u.createGrowl(GrowlMapper.toDatabase(growl));
+        return user.createGrowl(GrowlMapper.toDatabase(growl));
       })
       .then(GrowlMapper.toEntity)
       .catch(ErrorMapper.rethrowAsError);
