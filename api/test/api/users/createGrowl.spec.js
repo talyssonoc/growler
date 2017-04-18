@@ -23,10 +23,6 @@ describe('API :: POST /api/users/:id/growls', () => {
 
             expect(attributes.id).to.not.be.undefined();
             expect(attributes.text).to.equal('I am not sure what is happening');
-            expect(user.data).to.eql({
-              type: 'users',
-              id: String(userId)
-            });
             expect(user.links.self).to.equal(`/api/users/${userId}`);
           });
       });
@@ -37,11 +33,12 @@ describe('API :: POST /api/users/:id/growls', () => {
         return request()
           .post(`/api/users/0/growls`)
           .send(growlData())
-          .expect(400)
+          .expect(404)
           .then(({ body }) => {
-            const details = body.errors[0].meta.details;
+            const { errors } = body;
 
-            expect(details).to.equal('Could not find user with id 0');
+            expect(errors).to.have.lengthOf(1);
+            expect(errors[0].title).to.equal('User 0 is not available');
           });
       });
     });
@@ -67,7 +64,7 @@ describe('API :: POST /api/users/:id/growls', () => {
         .then((u) => userId = u.id);
     });
 
-    it.only('does not create and return status 400', () => {
+    it('does not create and return status 400', () => {
       return request()
         .post(`/api/users/${userId}/growls`)
         .send({
@@ -80,7 +77,14 @@ describe('API :: POST /api/users/:id/growls', () => {
         })
         .expect(400)
         .then(({ body }) => {
-          console.log(body);
+          const { errors } = body;
+
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].title).to.equal('"text" is not allowed to be empty');
+          expect(errors[0].meta).to.eql({
+            message: '"text" is not allowed to be empty',
+            path: 'text'
+          });
         });
     });
   });

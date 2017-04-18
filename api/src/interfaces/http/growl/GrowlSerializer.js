@@ -5,9 +5,10 @@ const GrowlSerializer = new Serializer('growls', {
   user: {
     ref: 'id',
     included: false,
+    ignoreRelationshipData: true,
     relationshipLinks: {
-      self(growl, user) {
-        return `/api/users/${user.id}`;
+      self(growl) {
+        return `/api/users/${growl.userId}`;
       }
     }
   }

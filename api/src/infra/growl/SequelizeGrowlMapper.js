@@ -8,15 +8,6 @@ const SequelizeGrowlMapper = {
   toEntity({ dataValues }) {
     const growlData = pick(DB_ATTRS, dataValues);
 
-    // TODO: improve this
-    if(growlData.userId && !growlData.user) {
-      growlData.user = {
-        id: growlData.userId
-      };
-
-      growlData.userId = undefined;
-    }
-
     return new Growl(growlData);
   },
 

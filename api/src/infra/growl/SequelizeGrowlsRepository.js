@@ -21,7 +21,7 @@ class SequelizeGrowlsRepository {
       .findById(growl.userId)
       .then((u) => {
         if(!u) {
-          const error = new NotFoundError(`Could not find user with id ${growl.userId}`);
+          const error = new NotFoundError('User', growl.userId);
 
           return Promise.reject(error);
         }

@@ -1,11 +1,11 @@
 class ValidationError extends Error {
   constructor(errors) {
-    super(ValidationError.MESSAGE);
-    this.name = ValidationError.MESSAGE;
+    super(ValidationError.NAME);
+    this.name = ValidationError.NAME;
     this.errors = errors;
   }
 }
 
-ValidationError.MESSAGE = 'ValidationError';
+ValidationError.NAME = 'ValidationError';
 
 module.exports = ValidationError;

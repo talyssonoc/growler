@@ -9,17 +9,11 @@ const SequelizeErrorMapper = {
   },
 
   convert(error) {
-    if(error.name === NotFoundError.MESSAGE) {
-      return error;
-    }
-
     if(error.message === 'Validation error') {
       return convertValidationError(error);
     }
 
-    switch(error.message) {
-    case 'Validation error':
-    }
+    return error;
   }
 };
 

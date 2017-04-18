@@ -28,24 +28,26 @@ const UserGrowlsController = {
       USER_NOT_FOUND
     } = createGrowl.outputs;
 
-    const handleBadRequest = (error) => {
-      res
-        .status(S.BAD_REQUEST)
-        .json(ErrorSerializer.badRequest(error));
-    };
-
     createGrowl
       .on(SUCCESS, (growl) => {
         res
           .status(S.CREATED)
           .json(GrowlSerializer.serialize(growl));
       })
-      .on(VALIDATION_ERROR, handleBadRequest)
-      .on(USER_NOT_FOUND, handleBadRequest)
+      .on(VALIDATION_ERROR, (error) => {
+        res
+          .status(S.BAD_REQUEST)
+          .json(ErrorSerializer.validationError(error));
+      })
+      .on(USER_NOT_FOUND, (error) => {
+        res
+          .status(S.NOT_FOUND)
+          .json(ErrorSerializer.notFound(error));
+      })
       .on(ERROR, next);
 
     JSONAPIDeserializer
-      .deserialize(req.body) // TODO: prevent of breaking when it's `{}`
+      .deserialize(req.body)
       .then((growlData) => {
         growlData = Object.assign(growlData, {
           userId: req.params.userId

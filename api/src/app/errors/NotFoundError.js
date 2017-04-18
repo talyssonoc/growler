@@ -1,11 +1,10 @@
 class NotFoundError extends Error {
-  constructor(errors = {}) {
-    super(NotFoundError.MESSAGE);
-    this.name = NotFoundError.MESSAGE;
-    this.errors = errors;
+  constructor(resource, identifier) {
+    super(`${resource} ${identifier} is not available`);
+    this.name = NotFoundError.NAME;
   }
 }
 
-NotFoundError.MESSAGE = 'NotFoundError';
+NotFoundError.NAME = 'NotFoundError';
 
 module.exports = NotFoundError;

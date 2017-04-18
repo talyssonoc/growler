@@ -25,9 +25,9 @@ class CreateGrowl extends Operation {
       })
       .catch((error) => {
         switch(error.name) {
-        case ValidationError.MESSAGE:
+        case ValidationError.NAME:
           return this.emit(VALIDATION_ERROR, error);
-        case NotFoundError.MESSAGE:
+        case NotFoundError.NAME:
           return this.emit(USER_NOT_FOUND, error);
         }
 
