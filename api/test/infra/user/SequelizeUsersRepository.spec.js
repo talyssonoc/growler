@@ -5,11 +5,15 @@ const User = require('src/domain/user/User');
 const { User: UserModel } = require('src/infra/database/models');
 
 describe('Infra :: User :: SequelizeUsersRepository', () => {
+  let repo;
+
+  beforeEach(() => {
+    repo = new SequelizeUsersRepository({ UserModel });
+  });
+
   describe('#add', () => {
     context('when user is valid', () => {
       it('persists the user', () => {
-        const repo  = new SequelizeUsersRepository({ UserModel });
-
         const user = new User({
           username: 'theuser',
           email: 'user@email.com',
@@ -38,8 +42,6 @@ describe('Infra :: User :: SequelizeUsersRepository', () => {
       });
 
       it('fails and does not persist', () => {
-        const repo  = new SequelizeUsersRepository({ UserModel });
-
         const user = new User({
           username: 'theuser',
           email: 'notunique@email.com',
@@ -52,14 +54,12 @@ describe('Infra :: User :: SequelizeUsersRepository', () => {
               expect(error.cause.name).to.equal('SequelizeUniqueConstraintError');
               expect(error.cause.fields).to.eql({ email: 'notunique@email.com' });
             });
-        }).to.not.alter(() => repo.count(), { by: 1 });
+        }).to.not.alter(() => repo.count());
       });
     });
 
     context('when user is invalid', () => {
       it('fails and does not persist', () => {
-        const repo  = new SequelizeUsersRepository({ UserModel });
-
         const user = new User({
           username: 'theuser',
           email: 'invalidemail',
@@ -72,7 +72,7 @@ describe('Infra :: User :: SequelizeUsersRepository', () => {
               expect(error.name).to.equal('ValidationError');
               expect(error.errors[0].path).to.equal('email');
             });
-        }).to.not.alter(() => repo.count(), { by: 1 });
+        }).to.not.alter(() => repo.count());
       });
     });
   });

@@ -4,8 +4,9 @@ const ValidationError = require('src/app/errors/ValidationError');
 const NotFoundError = require('src/app/errors/NotFoundError');
 
 class SequelizeGrowlsRepository {
-  constructor({ UserModel }) {
+  constructor({ UserModel, GrowlModel }) {
     this.UserModel = UserModel;
+    this.GrowlModel = GrowlModel;
   }
 
   add(growl) {
