@@ -4,6 +4,9 @@ instrumentation:
     - 'container.js'
     - 'app/Application.js'
     - 'interfaces/http/Server.js'
+    - 'interfaces/http/router.js'
+    - 'interfaces/http/logging/*.js'
+    - 'interfaces/http/utils/*.js'
 reporting:
   reports:
     - html
