@@ -19,7 +19,7 @@ class CreateUser extends Operation {
         this.emit(SUCCESS, newUser);
       })
       .catch((error) => {
-        if(error.message === ValidationError.MESSAGE) {
+        if(error.name === ValidationError.NAME) {
           return this.emit(VALIDATION_ERROR, error);
         }
 

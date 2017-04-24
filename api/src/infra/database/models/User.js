@@ -17,7 +17,9 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     classMethods: {
-      associate: function() { }
+      associate: function({ Growl }) {
+        this.hasMany(Growl, { as: 'Growls' });
+      }
     }
   });
 

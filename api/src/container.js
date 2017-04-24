@@ -4,6 +4,7 @@ const { scopePerRequest } = require('awilix-express');
 const config = require('../config');
 const Application = require('./app/Application');
 const CreateUser = require('./app/user/CreateUser');
+const CreateGrowl = require('./app/growl/CreateGrowl');
 
 const Server = require('./interfaces/http/Server');
 const router = require('./interfaces/http/router');
@@ -13,10 +14,16 @@ const devErrorHandler = require('./interfaces/http/errors/devErrorHandler');
 const JSONAPIDeserializer = require('./interfaces/http/JSONAPIDeserializer');
 const ErrorSerializer = require('./interfaces/http/errors/ErrorSerializer');
 const UserSerializer = require('./interfaces/http/user/UserSerializer');
+const GrowlSerializer = require('./interfaces/http/growl/GrowlSerializer');
 
 const logger = require('./infra/logging/logger');
 const SequelizeUsersRepository = require('./infra/user/SequelizeUsersRepository');
-const { database, User: UserModel } = require('./infra/database/models');
+const SequelizeGrowlsRepository = require('./infra/growl/SequelizeGrowlsRepository');
+const {
+  database,
+  User: UserModel,
+  Growl: GrowlModel
+} = require('./infra/database/models');
 
 const container = createContainer();
 
@@ -47,23 +54,27 @@ container
   .registerValue({
     JSONAPIDeserializer,
     ErrorSerializer,
-    UserSerializer
+    UserSerializer,
+    GrowlSerializer
   });
 
 // Repositories
 container.registerClass({
-  usersRepository: [SequelizeUsersRepository, { lifetime: Lifetime.SINGLETON }]
+  usersRepository: [SequelizeUsersRepository, { lifetime: Lifetime.SINGLETON }],
+  growlsRepository: [SequelizeGrowlsRepository, { lifetime: Lifetime.SINGLETON }]
 });
 
 // Database
 container.registerValue({
   database,
-  UserModel
+  UserModel,
+  GrowlModel
 });
 
 // Operations
 container.registerClass({
-  createUser: CreateUser
+  createUser: CreateUser,
+  createGrowl: CreateGrowl
 });
 
 module.exports = container;

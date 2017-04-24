@@ -28,7 +28,14 @@ module.exports = ({ config, containerMiddleware, loggerMiddleware, errorHandler 
     .use(compression())
     .use(containerMiddleware);
 
-  apiRouter.use('/users', controller('user/UsersController'));
+  const usersRouter = Router();
+
+  usersRouter
+    .use('/', controller('user/UsersController'))
+    .use('/:userId/growls', controller('growl/UserGrowlsController'));
+
+  apiRouter
+    .use('/users', usersRouter);
 
   router.use('/api', apiRouter);
 

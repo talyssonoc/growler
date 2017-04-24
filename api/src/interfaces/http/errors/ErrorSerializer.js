@@ -2,13 +2,19 @@ const JSONAPIError = require('jsonapi-serializer').Error;
 const S = require('http-status');
 
 const ErrorSerializer = {
-  badRequest(error) {
-    return new JSONAPIError({
+  validationError(error) {
+    const errors = error.errors.map((err) => ({
       status: String(S.BAD_REQUEST),
-      meta: {
-        details: error.errors,
-        cause: error.cause
-      }
+      title: err.message,
+      meta: err
+    }));
+
+    return new JSONAPIError(errors);
+  },
+  notFound(error) {
+    return new JSONAPIError({
+      status: String(S.NOT_FOUND),
+      title: error.message
     });
   }
 };

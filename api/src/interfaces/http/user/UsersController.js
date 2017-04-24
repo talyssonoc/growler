@@ -33,7 +33,7 @@ const UsersController = {
       .on(VALIDATION_ERROR, (error) => {
         res
           .status(S.BAD_REQUEST)
-          .json(ErrorSerializer.badRequest(error));
+          .json(ErrorSerializer.validationError(error));
       })
       .on(ERROR, next);
 

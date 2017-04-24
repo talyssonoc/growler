@@ -17,6 +17,14 @@ const User = attributes({
     type: String,
     required: true,
     minLength: 5
+  },
+  growls: {
+    type: Array,
+    itemType: 'Growl'
+  }
+}, {
+  dynamics: {
+    Growl: () => require('src/domain/growl/Growl')
   }
 })(class User {
 

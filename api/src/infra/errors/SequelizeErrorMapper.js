@@ -1,4 +1,5 @@
 const ValidationError = require('src/app/errors/ValidationError');
+const NotFoundError = require('src/app/errors/NotFoundError');
 
 const SequelizeErrorMapper = {
   rethrowAsError(error) {
@@ -8,10 +9,11 @@ const SequelizeErrorMapper = {
   },
 
   convert(error) {
-    switch(error.message) {
-    case 'Validation error':
+    if(error.message === 'Validation error') {
       return convertValidationError(error);
     }
+
+    return error;
   }
 };
 

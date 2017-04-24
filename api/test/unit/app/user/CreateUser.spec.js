@@ -30,7 +30,7 @@ describe('App :: User :: CreateUser', () => {
   context('when user is invalid to be persisted', () => {
     before(() => {
       const MockUsersRepository = {
-        add: () => Promise.reject(Error('ValidationError'))
+        add: () => Promise.reject({ name: 'ValidationError' })
       };
 
       createUser = new CreateUser({
@@ -42,7 +42,7 @@ describe('App :: User :: CreateUser', () => {
       const userData = { username: 'New User' };
 
       createUser.on(createUser.outputs.VALIDATION_ERROR, (response) => {
-        expect(response.message).to.equal('ValidationError');
+        expect(response).to.eql({ name: 'ValidationError' });
         done();
       });
 
